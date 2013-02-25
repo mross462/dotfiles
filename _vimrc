@@ -1,5 +1,15 @@
-" https://github.com/sontek/dotfiles/
-" ==========================================================
+"             _
+"      _   __(_)___ ___  __________
+"     | | / / / __ `__ \/ ___/ ___/
+"    _| |/ / / / / / / / /  / /__
+"   (_)___/_/_/ /_/ /_/_/   \___/
+
+" https://github.com/mross462/dotfiles
+"
+" Forked from: https://github.com/sontek/dotfiles 
+
+"
+" " ==========================================================
 " Dependencies - Libraries/Applications outside of vim
 " ==========================================================
 " Pep8 - http://pypi.python.org/pypi/pep8
@@ -46,97 +56,51 @@
 "
 " MakeGreen
 "    Generic test runner that works with nose
+
+
+
+"       ________            ____             _
+"      /_  __/ /_  ___     / __ )____ ______(_)_________
+"       / / / __ \/ _ \   / __  / __ `/ ___/ / ___/ ___/
+"      / / / / / /  __/  / /_/ / /_/ (__  ) / /__(__  )
+"     /_/ /_/ /_/\___/  /_____/\__,_/____/_/\___/____/
 "
-" ==========================================================
-" Shortcuts
-" ==========================================================
+"   These are some basic settings that make vim easier to use without 
+"   me having to think about what interface I'm on.
+
 set nocompatible              " Don't be compatible with vi
 let mapleader=","             " change the leader to be a comma vs slash
+set mouse=a                   " Most computers these days have these,
+                              " let's enable it
+set clipboard=unnamed         " Most computer have these too, let's enable it
+set encoding=utf-8 nobomb
 
-" Seriously, guys. It's not like :W is bound to anything anyway.
-command! W :w
+set binary                    " Don’t add empty newlines at the end of files
+set noeol                     "
 
-fu! SplitScroll()
-    :wincmd v
-    :wincmd w
-    execute "normal! \<C-d>"
-    :set scrollbind
-    :wincmd w
-    :set scrollbind
-endfu
+command! W :w                 " Bind Cap W to write a file
 
-nmap <leader>sb :call SplitScroll()<CR>
-
-
-"<CR><C-w>l<C-f>:set scrollbind<CR>
-
-" sudo write this
-cmap W! w !sudo tee % >/dev/null
-
-" Toggle the tasklist
-map <leader>td <Plug>TaskList
-
-" Run pep8
-let g:pep8_map='<leader>8'
-
-" run py.test's
-nmap <silent><Leader>tf <Esc>:Pytest file<CR>
-nmap <silent><Leader>tc <Esc>:Pytest class<CR>
-nmap <silent><Leader>tm <Esc>:Pytest method<CR>
-nmap <silent><Leader>tn <Esc>:Pytest next<CR>
-nmap <silent><Leader>tp <Esc>:Pytest previous<CR>
-nmap <silent><Leader>te <Esc>:Pytest error<CR>
-
-" Run django tests
-map <leader>dt :set makeprg=python\ manage.py\ test\|:call MakeGreen()<CR>
-
-" Reload Vimrc
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
-
-" open/close the quickfix window
-nmap <leader>c :copen<CR>
-nmap <leader>cc :cclose<CR>
-
-" for when we forget to use sudo to open/edit a file
-cmap w!! w !sudo tee % >/dev/null
-
-" ctrl-jklm  changes to that split
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
-
-" and lets make these all work in insert mode too ( <C-O> makes next cmd
-"  happen as if in command mode )
-imap <C-W> <C-O><C-W>
-
-" Open NerdTree
-map <leader>n :NERDTreeToggle<CR>
-
-" Run command-t file search
-map <leader>f :CommandT<CR>
-" Ack searching
-nmap <leader>a <Esc>:Ack!
-
-" Load the Gundo window
-map <leader>g :GundoToggle<CR>
-
-" Jump to the definition of whatever the cursor is on
-map <leader>j :RopeGotoDefinition<CR>
-
-" Rename whatever the cursor is on (including references to it)
-map <leader>r :RopeRename<CR>
-" ==========================================================
-" Pathogen - Allows us to organize our vim plugins
-" ==========================================================
-" Load pathogen with docs for all plugins
+"       ____        __  __
+"      / __ \____ _/ /_/ /_  ____  ____ ____  ____
+"     / /_/ / __ `/ __/ __ \/ __ \/ __ `/ _ \/ __ \
+"    / ____/ /_/ / /_/ / / / /_/ / /_/ /  __/ / / /
+"   /_/    \__,_/\__/_/ /_/\____/\__, /\___/_/ /_/
+"                               /____/
+"
+"   A great plugin manager for vim:
+"   https://github.com/tpope/vim-pathogen
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-" ==========================================================
-" Basic Settings
-" ==========================================================
+"       _    ________  ___   _____      __  __  _
+"      | |  / /  _/  |/  /  / ___/___  / /_/ /_(_)___  ____ ______
+"      | | / // // /|_/ /   \__ \/ _ \/ __/ __/ / __ \/ __ `/ ___/
+"      | |/ // // /  / /   ___/ /  __/ /_/ /_/ / / / / /_/ (__  )
+"      |___/___/_/  /_/   /____/\___/\__/\__/_/_/ /_/\__, /____/
+"                                                   /____/
+"   Settings that just make vim better.
+
 syntax on                     " syntax highlighing
 filetype on                   " try to detect filetypes
 filetype plugin indent on     " enable loading indent file for filetype
@@ -158,7 +122,6 @@ set wildignore+=*.egg-info/**
 
 set grepprg=ack         " replace the default grep program with ack
 
-
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
@@ -170,7 +133,6 @@ nnoremap <leader>. :lcd %:p:h<CR>
 " don't select first item, follow typing in autocomplete
 set completeopt=menuone,longest,preview
 set pumheight=6             " Keep a small completion window
-
 
 """ Moving Around/Editing
 set cursorline              " have a line indicate the cursor location
@@ -193,9 +155,6 @@ set matchpairs+=<:>         " show matching <> (html mainly) as well
 set foldmethod=indent       " allow us to fold on indents
 set foldlevel=99            " don't fold by default
 
-" don't outdent hashes
-inoremap # #
-
 " close preview window automatically when we move around
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
@@ -207,6 +166,7 @@ set noautoread              " Don't automatically re-read changed files.
 set modeline                " Allow vim options to be embedded in files;
 set modelines=5             " they must be within the first or last 5 lines.
 set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
+set colorcolumn=79          " Show me the line before 80
 
 """" Messages, Info, Status
 set ls=2                    " allways show status line
@@ -220,7 +180,7 @@ set laststatus=2            " Always show statusline, even if only 1 window.
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
 
 " displays tabs with :set list & displays when a line runs off-screen
-set listchars=tab:>-,eol:$,trail:-,precedes:<,extends:>
+set listchars=tab:>-,trail:-,precedes:<,extends:>
 set list
 
 """ Searching and Patterns
@@ -230,17 +190,14 @@ set smarttab                " Handle tabs more intelligently
 set hlsearch                " Highlight searches by default.
 set incsearch               " Incrementally search while typing a /regex
 
-"""" Display
-if has("gui_running")
-    colorscheme desert
-    " Remove menu bar
-    set guioptions-=m
-
-    " Remove toolbar
-    set guioptions-=T
-else
-    colorscheme torte
-endif
+"       __ __              __  ___                  _
+"      / //_/__  __  __   /  |/  /___ _____  ____  (_)___  ____ ______
+"     / ,< / _ \/ / / /  / /|_/ / __ `/ __ \/ __ \/ / __ \/ __ `/ ___/
+"    / /| /  __/ /_/ /  / /  / / /_/ / /_/ / /_/ / / / / / /_/ (__  )
+"   /_/ |_\___/\__, /  /_/  /_/\__,_/ .___/ .___/_/_/ /_/\__, /____/
+"             /____/               /_/   /_/            /____/
+"
+"   Keystrokes that make doing things easier
 
 " Paste from clipboard
 map <leader>p "+p
@@ -257,23 +214,56 @@ nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
 " Select the item in the list with enter
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" ==========================================================
-" Javascript
-" ==========================================================
-au BufRead *.js set makeprg=jslint\ %
+" sudo write this
+cmap W! w !sudo tee % >/dev/null
 
-" Use tab to scroll through autocomplete menus
-"autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
-"autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
+" Reload Vimrc
+map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
-let g:acp_completeoptPreview=1
+" for when we forget to use sudo to open/edit a file
+cmap w!! w !sudo tee % >/dev/null
 
-" ===========================================================
-" FileType specific changes
-" ============================================================
-" Mako/HTML
-autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
-autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+" Load the Gundo window
+map <leader>g :GundoToggle<CR>
+
+" don't outdent hashes
+inoremap # #
+
+"""" Display
+if has("gui_running")
+    colorscheme desert
+    " Remove menu bar
+    set guioptions-=m
+
+    " Remove toolbar
+    set guioptions-=T
+else
+    colorscheme torte
+endif
+
+
+"       __
+"      / /   ____ _____  ____ ___  ______ _____ ____
+"     / /   / __ `/ __ \/ __ `/ / / / __ `/ __ `/ _ \
+"    / /___/ /_/ / / / / /_/ / /_/ / /_/ / /_/ /  __/
+"   /_____/\__,_/_/ /_/\__, /\__,_/\__,_/\__, /\___/
+"                     /____/    /____/
+"       _____                 _     _
+"      / ___/____  ___  _____(_) __(_)____
+"      \__ \/ __ \/ _ \/ ___/ / /_/ / ___/
+"     ___/ / /_/ /  __/ /__/ / __/ / /__
+"    /____/ .___/\___/\___/_/_/ /_/\___/
+"        /_/
+"       _____      __  __
+"      / ___/___  / /_/ /_(_)___  ____ ______
+"      \__ \/ _ \/ __/ __/ / __ \/ __ `/ ___/
+"     ___/ /  __/ /_/ /_/ / / / / /_/ (__  )
+"    /____/\___/\__/\__/_/_/ /_/\__, /____/
+"                              /____/
+"
+"   To make the editing of specific types of files easier
+
+autocmd FileType html,xhtml,xml,css,ruby setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " Python
 "au BufRead *.py compiler nose
@@ -281,28 +271,6 @@ au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 au FileType coffee setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class,with
 au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+
 " Don't let pyflakes use the quickfix window
 let g:pyflakes_use_quickfix = 0
-
-
-
-" Add the virtualenv's site-packages to vim path
-if has('python')
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif
-
-" Load up virtualenv's vimrc if it exists
-if filereadable($VIRTUAL_ENV . '/.vimrc')
-    source $VIRTUAL_ENV/.vimrc
-endif
-
-set colorcolumn=79

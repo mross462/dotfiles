@@ -1,0 +1,17 @@
+#       ____        __  __
+#      / __ \____ _/ /_/ /_
+#     / /_/ / __ `/ __/ __ \
+#    / ____/ /_/ / /_/ / / /
+#   /_/    \__,_/\__/_/ /_/
+#
+PATH=$GEM_PATH/bin:$HOME/.rvm/bin:/usr/local/Cellar:/usr/local/sbin:/usr/local/bin:/usr/local/share/npm/bin/:$PATH
+
+#Set the python path
+PYTHONPATH=/Library/Python/2.6/site-packages:mezeowsgi:/usr/local/share/python
+
+#Color because it's better
+export TERM=xterm-256color
+
+#Use VIM as the default editor
+export EDITOR="vim"
+export GIT_EDITOR="vim"

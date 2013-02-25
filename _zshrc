@@ -1,0 +1,24 @@
+#!/bin/zsh
+#Love My Girl
+alias bissou="echo 'Love My Girl'"
+
+#Source our Exports First
+source $HOME/.exports
+
+#ZSH Stuff
+ZSH=$HOME/repos/dotfiles/_oh-my-zsh
+ZSH_THEME="mross"
+COMPLETION_WAITING_DOTS="true"
+
+#Oh My ZSH Plugins
+plugins=(git jira pip urltools vagrant)
+source $ZSH/oh-my-zsh.sh
+
+#RVM Stuff
+source /Users/mross/.rvm/scripts/rvm
+
+#Aliases
+source $HOME/.aliases
+
+#Functions
+source $HOME/.functions

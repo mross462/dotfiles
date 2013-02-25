@@ -1,0 +1,148 @@
+#       _____            __
+#      / ___/__  _______/ /____  ____ ___
+#      \__ \/ / / / ___/ __/ _ \/ __ `__ \
+#     ___/ / /_/ (__  ) /_/  __/ / / / / /
+#    /____/\__, /____/\__/\___/_/ /_/ /_/
+#         /____/
+
+# Create a new directory and enter it
+function mkd() {
+    mkdir -p "$@" && cd "$@"
+}
+
+# Determine size of a file or total size of a directory
+function fs() {
+    if du -b /dev/null > /dev/null 2>&1; then
+        local arg=-sbh
+    else
+        local arg=-sh
+    fi
+    if [[ -n "$@" ]]; then
+        du $arg -- "$@"
+    else
+        du $arg .[^.]* *
+    fi
+}
+
+#Open Google Search From The Command Line:
+google() {
+    search=""
+    echo "Searching StackOverflow for: '$*'"
+    for term in $*; do
+        search="$search%20$term"
+    done
+
+    if [[ `uname` == 'Darwin' ]]
+    then
+        open "http://www.google.com/search?q=$search"
+    else
+        xdg-open "http://www.google.com/search?q=$search"
+    fi
+}
+
+#Open StackOverflow Search From The Command Line:
+stack() {
+    search=""
+    echo "Searching StackOverflow for: '$*'"
+    for term in $*; do
+        search="$search%20$term"
+    done
+
+    if [[ `uname` == 'Darwin' ]]
+    then
+        open "http://stackoverflow.com/search?q=$search"
+    else
+        xdg-open "http://stackoverflow.com/search?q=$search"
+    fi
+}
+
+#Preview Markdown in the Browser npm -g install marked
+mdpreview(){
+
+    which marked > /dev/null
+    if [ $? -ne 0 ]; then
+        echo "Please install marked. See: https://github.com/chjj/marked"
+        terminate
+    fi
+
+    randomfilename="$RANDOM.html"
+    cat $1 | marked -o $randomfilename
+
+    if [[ `uname` == 'Darwin' ]]
+    then
+        open $randomfilename
+    else
+        xdg-open $randomfilename
+    fi
+
+    #Because your browser probably won't service the request before it's generated
+    sleep 1
+
+    rm -rf $randomfilename
+}
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+    local port="${1:-8000}"
+    sleep 1 && open "http://localhost:${port}/" &
+    # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+    # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+    python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+function curlroot() {
+        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+                      -H 'Accept: */*' \
+                      -k -u administrator:mezeo https://$1/cdmi -i; echo
+
+        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+                      -H 'Accept: */*' \
+                      -k -u administrator:mezeo https://$1/cdmi | pjson;
+}
+
+function curlcdmi() {
+        echo
+        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+             -H 'Accept: */*' \
+             -k -3 -u  administrator:$1 $2 | pjson;
+}
+
+function createContainer() {
+        echo
+        curl -v -k -u administrator:$1 -H 'content-type: application/cdmi-container' \
+                                                   --data-binary '{"metadata":{}}' $2 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1' -i
+
+        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+                      -H 'Accept: */*' \
+                      -k -u administrator:mezeo https://$2 | python -mjson.tool;
+}
+
+function createDataObject() {
+        echo
+        curl -v -k -u administrator:mezeo -H 'content-type: application/cdmi-object' \
+                                          --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Hello CDMI World!"}'  \
+                                          https://$1 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
+
+        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+                      -H 'Accept: */*' \
+                      -k -u administrator:mezeo https://$1 | python -mjson.tool;
+}
+
+function updateDataObject() {
+        echo
+        curl -v -k -u administrator:mezeo -H 'content-type: application/cdmi-object' --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Foggy"}' https://$1 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
+
+        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+                      -H 'Accept: */*' \
+                      -k -u administrator:mezeo https://$1 | python -mjson.tool;
+}
+
+function accountInfo(){
+        echo "☁  MezeoCloud Says:"
+        echo 'Cloud Resource:'
+        curl -k -u $1:$2 https://$3/v2 -H 'X-Client-Specification: 3' -H 'Content-Type: application/vnd.csp.cloud+json' | python2.6 -mjson.tool
+        echo
+        echo 'Account Resource'
+        curl -k -u $1:$2 https://$3/v2/account -H 'Content-Type: application/vnd.csp.account-info2+json' -H 'Accept: application/vnd.csp.account-info2+json' | python2.6 -mjson.tool
+        echo
+}
