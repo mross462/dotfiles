@@ -15,10 +15,12 @@ plugins=(git jira pip urltools vagrant)
 source $ZSH/oh-my-zsh.sh
 
 #RVM Stuff
-source /Users/mross/.rvm/scripts/rvm
+source $HOME/.rvm/scripts/rvm
 
 #Aliases
 source $HOME/.aliases
 
 #Functions
 source $HOME/.functions
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
