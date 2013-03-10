@@ -10,6 +10,12 @@ function mkd() {
     mkdir -p "$@" && cd "$@"
 }
 
+#Take a quick 60 second screencast and upload it to google drive
+function screencast() {
+    osascript $HOME/Desktop/Cloud/Google\ Drive/Screencasts/screencast.scpt
+    mv /tmp/test.mov $HOME/Desktop/Cloud/Google\ Drive/Screencasts
+}
+
 # Determine size of a file or total size of a directory
 function fs() {
     if du -b /dev/null > /dev/null 2>&1; then
