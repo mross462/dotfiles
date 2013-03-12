@@ -274,3 +274,18 @@ au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\
 
 " Don't let pyflakes use the quickfix window
 let g:pyflakes_use_quickfix = 0
+
+"   _    ________  ___   __________  __  _______
+"   | |  / /  _/  |/  /  / ____/ __ \/  |/  /  _/
+"   | | / // // /|_/ /  / /   / / / / /|_/ // /
+"   | |/ // // /  / /  / /___/ /_/ / /  / // /
+"   |___/___/_/  /_/   \____/_____/_/  /_/___/
+"
+"   I wrote a vim plugin for cdmi, you should check it out.
+"   http://www.github.com/mross462/vim-cdmi
+"   Here are the settings for it
+let g:cdmi_version="1.0.1"
+let g:cdmi_host="mcsp1.cloud"
+let g:cdmi_user="administrator"
+let g:cdmi_adminpassword="wnxy68Z/CJYDIfDsJ9qoWg"
+let g:cdmi_secure="True"
