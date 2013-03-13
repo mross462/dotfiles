@@ -135,3 +135,6 @@ alias genpasswd="openssl rand -base64 16"
 #Llaves
 alias llaves='cat $HOME/repos/llaves/.*'
 alias abran='vim $HOME/repos/llaves/.*'
+
+#Login to My MAAS Box
+alias maas='ssh -A -t -L 4444:localhost:4444 mezeoadmin@cnas ssh -A -t -L 4444:localhost:80 mezeoadmin@maas'
