@@ -96,59 +96,71 @@ function server() {
     python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
-function curlroot() {
-        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-                      -H 'Accept: */*' \
-                      -k -u administrator:mezeo https://$1/cdmi -i; echo
-
-        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-                      -H 'Accept: */*' \
-                      -k -u administrator:mezeo https://$1/cdmi | pjson;
-}
-
 function curlcdmi() {
-        echo
-        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-             -H 'Accept: */*' \
-             -k -3 -u  administrator:$1 $2 | pjson;
+    echo
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: curlcdmi <user>:<password> <URL>"
+        exit 1
+    fi
+    curl -k -v -H 'X-CDMI-Specification-Version: 1.0.1' -H 'Accept: */*' -u  $1 $2 | python -mjson.tool;
 }
 
-function createContainer() {
-        echo
-        curl -v -k -u administrator:$1 -H 'content-type: application/cdmi-container' \
-                                                   --data-binary '{"metadata":{}}' $2 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1' -i
-
-        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-                      -H 'Accept: */*' \
-                      -k -u administrator:mezeo https://$2 | python -mjson.tool;
+function createCDMIContainer() {
+    echo
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: createCDMIContianer <user>:<password> <URL>"
+        exit 1
+    fi
+    curl -v -k -u $1 -H 'content-type: application/cdmi-container' \
+            --data-binary '{"metadata":{}}' $2 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
+    curl -H 'X-CDMI-Specification-Version: 1.0.1' -H 'Accept: */*' -k -u $1 -v $2 | python -mjson.tool;
 }
 
-function createDataObject() {
-        echo
-        curl -v -k -u administrator:mezeo -H 'content-type: application/cdmi-object' \
-                                          --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Hello CDMI World!"}'  \
-                                          https://$1 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
-
-        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-                      -H 'Accept: */*' \
-                      -k -u administrator:mezeo https://$1 | python -mjson.tool;
+function deleteCDMIobject() {
+    echo
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: createCDMIContianer <user>:<password> <URL>"
+        exit 1
+    fi
+    curl -v -k -u $1 -H 'content-type: application/cdmi-container' \
+            --data-binary '{"metadata":{}}' $2 -X DELETE -H 'X-CDMI-Specification-Version: 1.0.1'
+    curl -H 'X-CDMI-Specification-Version: 1.0.1' -H 'Accept: */*' -k -u $1 -v $2 | python -mjson.tool;
 }
 
-function updateDataObject() {
-        echo
-        curl -v -k -u administrator:mezeo -H 'content-type: application/cdmi-object' --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Foggy"}' https://$1 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
+function createCDMIDataObject() {
+    echo
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: createCDMIDataObject <user>:<password> <URL>"
+        exit 1
+    fi
+    curl -v -k -u $1 -H 'content-type: application/cdmi-object' \
+         --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Hello CDMI World!"}'  \
+         $2 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
+    curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+         -H 'Accept: */*' \
+         -k -u administrator:mezeo https://$1 | python -mjson.tool;
+}
 
-        curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-                      -H 'Accept: */*' \
-                      -k -u administrator:mezeo https://$1 | python -mjson.tool;
+function updateCDMIDataObject() {
+    echo
+    if [ "$#" -ne 2 ]; then
+        echo "Usage: createCDMIDataObject <user>:<password> <URL>"
+        exit 1
+    fi
+    curl -v -k -u administrator:mezeo -H 'content-type: application/cdmi-object' \
+        --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Foggy"}' \
+        https://$1 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
+    curl -H 'X-CDMI-Specification-Version: 1.0.1' \
+                    -H 'Accept: */*' \
+                    -k -u administrator:mezeo https://$1 | python -mjson.tool;
 }
 
 function accountInfo(){
-        echo "☁  MezeoCloud Says:"
-        echo 'Cloud Resource:'
-        curl -k -u $1:$2 https://$3/v2 -H 'X-Client-Specification: 3' -H 'Content-Type: application/vnd.csp.cloud+json' | python2.6 -mjson.tool
-        echo
-        echo 'Account Resource'
-        curl -k -u $1:$2 https://$3/v2/account -H 'Content-Type: application/vnd.csp.account-info2+json' -H 'Accept: application/vnd.csp.account-info2+json' | python2.6 -mjson.tool
-        echo
+    echo "☁  MezeoCloud Says:"
+    echo 'Cloud Resource:'
+    curl -k -u $1:$2 https://$3/v2 -H 'X-Client-Specification: 3' \-H 'Content-Type: application/vnd.csp.cloud+json' | python2.6 -mjson.tool
+    echo
+    echo 'Account Resource'
+    curl -k -u $1:$2 https://$3/v2/account -H 'Content-Type: application/vnd.csp.account-info2+json' -H 'Accept: application/vnd.csp.account-info2+json' | python2.6 -mjson.tool
+    echo
 }
