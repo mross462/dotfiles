@@ -14,9 +14,6 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(git jira pip urltools vagrant)
 source $ZSH/oh-my-zsh.sh
 
-#RVM Stuff
-source $HOME/.rvm/scripts/rvm
-
 #Aliases
 source $HOME/.aliases
 
