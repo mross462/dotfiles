@@ -72,7 +72,7 @@ set nocompatible              " Don't be compatible with vi
 let mapleader=","             " change the leader to be a comma vs slash
 set mouse=a                   " Most computers these days have these,
                               " let's enable it
-set clipboard=unnamed         " Most computer have these too, let's enable it
+set clipboard=unnamedplus     " Most computer have these too, let's enable it
 set encoding=utf-8 nobomb
 
 set binary                    " Don’t add empty newlines at the end of files
@@ -285,7 +285,7 @@ let g:pyflakes_use_quickfix = 0
 "   http://www.github.com/mross462/vim-cdmi
 "   Here are the settings for it
 let g:cdmi_version="1.0.1"
-let g:cdmi_host="mcsp1.cloud"
+let g:cdmi_host="qa.mezeofile.com"
 let g:cdmi_user="administrator"
 let g:cdmi_adminpassword="wnxy68Z/CJYDIfDsJ9qoWg"
 let g:cdmi_secure="True"
