@@ -28,9 +28,6 @@
 [submodule "_vim/bundle/pytest"]
     path = _vim/bundle/pytest
     url = https://github.com/alfredodeza/pytest.vim.git
-[submodule "_vim/bundle/surround"]
-    path = _vim/bundle/surround
-    url = https://github.com/tpope/vim-surround.git
 [submodule "_vim/bundle/syntastic"]
     path = _vim/bundle/syntastic
     url = https://github.com/scrooloose/syntastic.git
