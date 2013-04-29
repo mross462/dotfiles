@@ -72,7 +72,10 @@ set nocompatible              " Don't be compatible with vi
 let mapleader=","             " change the leader to be a comma vs slash
 set mouse=a                   " Most computers these days have these,
                               " let's enable it
-set clipboard=unnamedplus     " Most computer have these too, let's enable it
+
+" Figure out which clipboard to use
+set clipboard=unnamedplus
+
 set encoding=utf-8 nobomb
 
 set binary                    " Don’t add empty newlines at the end of files
@@ -229,6 +232,8 @@ map <leader>g :GundoToggle<CR>
 " don't outdent hashes
 inoremap # #
 
+colorscheme harlequin
+
 """" Display
 if has("gui_running")
     colorscheme desert
@@ -238,7 +243,7 @@ if has("gui_running")
     " Remove toolbar
     set guioptions-=T
 else
-    colorscheme torte
+    colorscheme harlequin
 endif
 
 
