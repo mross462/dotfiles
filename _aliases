@@ -134,7 +134,7 @@ alias llaves='cat $HOME/repos/llaves/.*'
 alias abran='vim $HOME/repos/llaves/.*'
 
 #Notes
-alias notes='ls -alt $HOME/repos/notes'
+alias notes='ls -alt $HOME/repos/notes; cd $HOME/repos/notes'
 
 #Login to My MAAS Box
 alias maas='ssh -A -t -L 4444:localhost:4444 mezeoadmin@cnas ssh -A -t -L 4444:localhost:80 mezeoadmin@maas'
