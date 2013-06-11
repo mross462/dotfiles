@@ -11,7 +11,7 @@ ZSH_THEME="mross"
 COMPLETION_WAITING_DOTS="true"
 
 #Oh My ZSH Plugins
-plugins=(git jira pip urltools vagrant)
+plugins=(chef git jira pip urltools vagrant)
 source $ZSH/oh-my-zsh.sh
 
 #Aliases

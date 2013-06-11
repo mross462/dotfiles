@@ -2,6 +2,9 @@
 # Things that make using a terminal fun
 alias starwars='telnet towel.blinkenlights.nl'
 
+#curl is pretty much useless without a -v option
+alias curl='curl -v'
+
 # Navigation
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -18,6 +21,7 @@ alias h="history"
 alias v="vim"
 alias o="open"
 alias irc="irssi"
+alias vag="vagrant"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -120,8 +124,3 @@ alias notes='ls -alt $HOME/repos/notes; cd $HOME/repos/notes'
 
 #Login to my testingmachine
 alias testingmachine='ssh -A -t -L 4444:localhost:4444 corp.mezeo.com ssh -A -t -L 4444:localhost:80 mikews'
-
-#Login to viper
-alias viper1='ssh -A -t mezeoadmin@cnas ssh -A -t ubuntu@viper1'
-alias viper2='ssh -A -t mezeoadmin@cnas ssh -A -t ubuntu@viper2'
-alias viper3='ssh -A -t mezeoadmin@cnas ssh -A -t ubuntu@viper3'

@@ -74,7 +74,7 @@ set mouse=a                   " Most computers these days have these,
                               " let's enable it
 
 " Figure out which clipboard to use
-set clipboard=unnamedplus
+set clipboard=unnamed  " Share X windows clipboard.
 
 set encoding=utf-8 nobomb
 
@@ -294,3 +294,6 @@ let g:cdmi_host="qa.mezeofile.com"
 let g:cdmi_user="administrator"
 let g:cdmi_adminpassword="wnxy68Z/CJYDIfDsJ9qoWg"
 let g:cdmi_secure="True"
+
+let g:syntastic_check_on_open=1
+let g:syntastic_python_checker="flake8"
