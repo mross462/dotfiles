@@ -34,6 +34,9 @@
 [submodule "_vim/bundle/vim-cdmi"]
     path = _vim/bundle/vim-cdmi
     url = https://github.com/mross462/vim-cdmi.git
-[submodule ".vim/bundle/puppet"]
-	path = .vim/bundle/puppet
-	url = git://github.com/rodjek/vim-puppet.git
+[submodule "_vim/bundle/puppet"]
+    path = .vim/bundle/puppet
+    url = git://github.com/rodjek/vim-puppet.git
+[submodule "_vim/bundle/YouCompleteMe"]
+    path = .vim/bundle/YouCompleteMe
+    url = https://github.com/Valloric/YouCompleteMe.git
