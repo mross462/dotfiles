@@ -16,6 +16,7 @@ alias -- -="cd -"
 
 # Shortcuts
 alias g="git"
+alias lola="git lola"
 alias le="less -R"
 alias h="history"
 alias v="vim"
