@@ -125,3 +125,8 @@ alias notes='ls -alt $HOME/repos/notes; cd $HOME/repos/notes'
 
 #Login to my testingmachine
 alias testingmachine='ssh -A -t -L 4444:localhost:4444 corp.mezeo.com ssh -A -t -L 4444:localhost:80 mikews'
+
+#Cowsays
+alias mikesays='echo $1 | cowsay -f mross -W 54'
+alias mikethinks='echo $1 | cowthink -f mross -W 54'
+alias jmike='python -mjson.tool | cowsay -f mross -n | less'
