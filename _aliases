@@ -108,6 +108,9 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
     alias "$method"="lwp-request -m '$method'"
 done
 
+#Speedtest
+alias speedtest="wget --output-document=/dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
+
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
 alias pumpitup="osascript -e 'set volume 7'"
@@ -122,9 +125,6 @@ alias abran='vim $HOME/repos/llaves/.*'
 
 #Notes
 alias notes='ls -alt $HOME/repos/notes; cd $HOME/repos/notes'
-
-#Login to my testingmachine
-alias testingmachine='ssh -A -t -L 4444:localhost:4444 corp.mezeo.com ssh -A -t -L 4444:localhost:80 mikews'
 
 #Cowsays
 alias mikesays='echo $1 | cowsay -f mross -W 54'
