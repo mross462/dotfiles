@@ -1,3 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/Users/mross/repos/dotfiles/_vim'
+let g:netrw_dirhist_2='/var/www/prov'
+let g:netrw_dirhist_3='/var/www'
+let g:netrw_dirhist_4='/var/www/cas'
+let g:netrw_dirhist_5='/var/www'
+let g:netrw_dirhist_6='/var/www/prov'
