@@ -1,7 +1,4 @@
 #!/bin/zsh
-#Love My Girl
-alias bissou="echo 'Love My Girl'"
-
 #Source our Exports First
 source $HOME/.exports
 
