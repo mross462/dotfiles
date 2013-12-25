@@ -1,4 +1,4 @@
-#      ____        __  __
+#     ____        __  __
 #      / __ \____ _/ /_/ /_
 #     / /_/ / __ `/ __/ __ \
 #    / ____/ /_/ / /_/ / / /
@@ -7,7 +7,7 @@
 PATH=/opt/splunk/bin:/usr/local/Cellar/ruby/2.0.0-p0/bin:$GEM_PATH/bin:$HOME/.rvm/bin:/usr/local/Cellar:/usr/local/sbin:/usr/local/bin:/usr/local/share/npm/bin/:/usr/local/share/npm/lib/node_modules:/usr/games:$PATH
 
 #Set the python path
-PYTHONPATH=/Library/Python/2.6/site-packages:mezeowsgi:/usr/local/share/python
+PYTHONPATH=/Library/Python/2.7/site-packages:/usr/local/share/python
 
 #Color because it's better
 export TERM=xterm-256color
