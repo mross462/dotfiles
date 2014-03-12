@@ -2,6 +2,9 @@
 # Things that make using a terminal fun
 alias starwars='telnet towel.blinkenlights.nl'
 
+# Make ssh verbose so you can see where the failures are when you can't connect
+alias ssh='ssh -v'
+
 #curl is pretty much useless without a -v option
 alias curl='curl -v'
 
