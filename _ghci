@@ -1,1 +1,4 @@
-:set prompt "λ> "
+let cur fill = do { cwd <- System.Directory.getCurrentDirectory; return (":set prompt \"" ++ cwd ++ fill ++ " \""); }
+:def doprompt (\_ -> cur " λ >")
+:def mycd (\dir -> System.Directory.setCurrentDirectory dir >> cur ">")
+:doprompt
