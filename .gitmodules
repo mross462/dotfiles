@@ -46,5 +46,12 @@
 [submodule "_vim/bundle/Superior-Haskell-Interaction-Mode-SHIM "]
     path = .vim/bundle/Superior-Haskell-Interaction-Mode-SHIM
     url = https://github.com/vim-scripts/Superior-Haskell-Interaction-Mode-SHIM.git
+[submodule "_vim/bundle/vimproc.vim"]
+    path = .vim/bundle/vimproc.vim
+    url = https://github.com/Shougo/vimproc.vim
+[submodule "_vim/bundle/vimshell.vim"]
+    path = .vim/bundle/vimshell.vim
+    url = https://github.com/Shougo/vimshell.vim
+
 
 
