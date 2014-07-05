@@ -30,7 +30,7 @@
     ls = ls-files
 	unstash = !git stash show -p | git apply -R
 
-[difftool "sourcetree"]
+[difftool "vim"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
