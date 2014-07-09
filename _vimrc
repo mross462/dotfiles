@@ -315,3 +315,4 @@ let g:cdmi_secure="True"
 
 let g:syntastic_check_on_open=1
 let g:syntastic_python_checkers=['flake8','pyflakes','pep8','pylint']
+let g:syntastic_javascript_checkers = ['jshint']
