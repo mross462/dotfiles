@@ -139,3 +139,6 @@ alias reverse_shell=\'python -c 'import socket,subprocess,os;s=socket.socket(soc
 
 #Gimmie another alias for ghci
 alias haskell= 'ghci'
+
+#Contextual Grep
+alias cgrep= 'grep -C5 $1 * -R'
