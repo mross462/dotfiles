@@ -157,7 +157,6 @@ set autoindent              " always set autoindenting on
 set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
 set cursorline              " have a line indicate the cursor location
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
-set foldlevel=99            " don't fold by default
 set foldmethod=indent       " allow us to fold on indents
 set linebreak               " don't wrap textin the middle of a word
 set matchpairs+=<:>         " show matching <> (html mainly) as well
