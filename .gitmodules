@@ -8,7 +8,7 @@
     path = _vim/bundle/acp
     url = https://github.com/vim-scripts/AutoComplPop.git
 [submodule "_vim/bundle/vim-airline"]
-    path = _vim/bundle/acp
+    path = _vim/bundle/airline
     url = https://github.com/bling/vim-airline
 [submodule "_vim/bundle/fugitive"]
     path = _vim/bundle/fugitive
@@ -34,24 +34,12 @@
 [submodule "_vim/bundle/syntastic"]
     path = _vim/bundle/syntastic
     url = https://github.com/scrooloose/syntastic.git
-[submodule "_vim/bundle/vim-cdmi"]
-    path = _vim/bundle/vim-cdmi
-    url = https://github.com/mross462/vim-cdmi.git
-[submodule "_vim/bundle/puppet"]
-    path = .vim/bundle/puppet
-    url = git://github.com/rodjek/vim-puppet.git
-[submodule "_vim/bundle/YouCompleteMe"]
-    path = .vim/bundle/YouCompleteMe
-    url = https://github.com/Valloric/YouCompleteMe.git
 [submodule "_vim/bundle/Superior-Haskell-Interaction-Mode-SHIM "]
     path = .vim/bundle/Superior-Haskell-Interaction-Mode-SHIM
     url = https://github.com/vim-scripts/Superior-Haskell-Interaction-Mode-SHIM.git
 [submodule "_vim/bundle/vimproc.vim"]
-    path = .vim/bundle/vimproc.vim
+    path = .vim/bundle/vimproc
     url = https://github.com/Shougo/vimproc.vim
 [submodule "_vim/bundle/vimshell.vim"]
-    path = .vim/bundle/vimshell.vim
+    path = .vim/bundle/vimshell
     url = https://github.com/Shougo/vimshell.vim
-
-
-
