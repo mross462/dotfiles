@@ -15,7 +15,6 @@
 " Pep8 - http://pypi.python.org/pypi/pep8
 " Pyflakes
 " Ack
-" Rake & Ruby for command-t
 " nose, django-nose
 
 " ==========================================================
@@ -57,8 +56,6 @@
 " MakeGreen
 "    Generic test runner that works with nose
 
-
-
 "       ________            ____             _
 "      /_  __/ /_  ___     / __ )____ ______(_)_________
 "       / / / __ \/ _ \   / __  / __ `/ ___/ / ___/ ___/
@@ -96,6 +93,32 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+"       ,
+"              / \,,_  .'|
+"           ,{{| /}}}}/_.'            _____________________________________________
+"          }}}}` '{{'  '.            /                                             \
+"        {{{{{    _   ;, \          /            Ladies and Gentlemen,              \
+"     ,}}}}}}    /o`\  ` ;)        |                                                |
+"    {{{{{{   /           (        |                 this is ...                    |
+"    }}}}}}   |            \       |                                                |
+"   {{{{{{{{   \            \      |                                                |
+"   }}}}}}}}}   '.__      _  |     |    _____             __             __  _      |
+"   {{{{{{{{       /`._  (_\ /     |   / ___/__  ______  / /_____ ______/ /_(_)____ |
+"    }}}}}}'      |    //___/   --=:   \__ \/ / / / __ \/ __/ __ `/ ___/ __/ / ___/ |
+"   `{{{{`       |     '--'       |  ___/ / /_/ / / / / /_/ /_/ (__  ) /_/ / /__   |
+"     }}}`                         | /____/\__, /_/ /_/\__/\__,_/____/\__/_/\___/   |
+"                                  |      /____/                                    |
+"                                  |                                               /
+"                                   \_____________________________________________/
+
+let g:syntastic_check_on_open=1
+let g:syntastic_python_checkers=['flake8','pyflakes','pep8','pylint']
+let g:syntastic_javascript_checkers = ['jshint']
+
+
+
+
+
 "       _    ________  ___   _____      __  __  _
 "      | |  / /  _/  |/  /  / ___/___  / /_/ /_(_)___  ____ ______
 "      | | / // // /|_/ /   \__ \/ _ \/ __/ __/ / __ \/ __ `/ ___/
@@ -104,15 +127,15 @@ call pathogen#helptags()
 "                                                   /____/
 "   Settings that just make vim better.
 
-syntax on                     " syntax highlighing
 filetype on                   " try to detect filetypes
 filetype plugin indent on     " enable loading indent file for filetype
+set background=dark           " We are using dark background in vim
 set number                    " Display line numbers
 set numberwidth=1             " using only 1 column (and 1 space) while possible
-set background=dark           " We are using dark background in vim
 set title                     " show title in console title bar
 set wildmenu                  " Menu completion in command mode on <Tab>
 set wildmode=full             " <Tab> cycles between all matching choices.
+syntax on                     " syntax highlighing
 
 " don't bell or blink
 set noerrorbells
@@ -125,73 +148,65 @@ set wildignore+=*.egg-info/**
 
 set grepprg=ack         " replace the default grep program with ack
 
-" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
-
-" Disable the colorcolumn when switching modes.  Make sure this is the
-" first autocmd for the filetype here
-"autocmd FileType * setlocal colorcolumn=0
-
 """ Insert completion
-" don't select first item, follow typing in autocomplete
 set completeopt=menuone,longest,preview
 set pumheight=6             " Keep a small completion window
 
 """ Moving Around/Editing
-set cursorline              " have a line indicate the cursor location
-set ruler                   " show the cursor position all the time
-set nostartofline           " Avoid moving cursor to BOL when jumping around
-set virtualedit=block       " Let cursor move past the last char in <C-v> mode
-set scrolloff=3             " Keep 3 context lines above and below the cursor
-set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
-set showmatch               " Briefly jump to a paren once it's balanced
-set nowrap                  " don't wrap text
-set linebreak               " don't wrap textin the middle of a word
 set autoindent              " always set autoindenting on
-set smartindent             " use smart indent if there is no indent file
-set tabstop=4               " <tab> inserts 4 spaces 
-set shiftwidth=4            " but an indent level is 2 spaces wide.
-set softtabstop=4           " <BS> over an autoindent deletes both spaces.
+set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
+set cursorline              " have a line indicate the cursor location
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
-set shiftround              " rounds indent to a multiple of shiftwidth
-set matchpairs+=<:>         " show matching <> (html mainly) as well
-set foldmethod=indent       " allow us to fold on indents
 set foldlevel=99            " don't fold by default
+set foldmethod=indent       " allow us to fold on indents
+set linebreak               " don't wrap textin the middle of a word
+set matchpairs+=<:>         " show matching <> (html mainly) as well
+set nostartofline           " Avoid moving cursor to BOL when jumping around
+set nowrap                  " don't wrap text
+set ruler                   " show the cursor position all the time
+set scrolloff=3             " Keep 3 context lines above and below the cursor
+set shiftround              " rounds indent to a multiple of shiftwidth
+set shiftwidth=4            " but an indent level is 2 spaces wide.
+set showmatch               " Briefly jump to a paren once it's balanced
+set smartindent             " use smart indent if there is no indent file
+set softtabstop=4           " <BS> over an autoindent deletes both spaces.
+set tabstop=4               " <tab> inserts 4 spaces 
+set virtualedit=block       " Let cursor move past the last char in <C-v> mode
 
 " close preview window automatically when we move around
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 """" Reading/Writing
-set noautowrite             " Never write a file unless I request it.
-set noautowriteall          " NEVER.
-set noautoread              " Don't automatically re-read changed files.
+set colorcolumn=79          " Show me the line before 80
+set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
 set modeline                " Allow vim options to be embedded in files;
 set modelines=5             " they must be within the first or last 5 lines.
-set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
-set colorcolumn=79          " Show me the line before 80
+set noautoread              " Don't automatically re-read changed files.
+set noautowrite             " Never write a file unless I request it.
+set noautowriteall          " NEVER.
 
 """" Messages, Info, Status
-set ls=2                    " allways show status line
-set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
 set confirm                 " Y-N-C prompt if closing with unsaved changes.
-set showcmd                 " Show incomplete normal mode commands as I type.
-set report=0                " : commands always print changed line count.
-set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
-set ruler                   " Show some info, even without statuslines.
 set laststatus=2            " Always show statusline, even if only 1 window.
+set ls=2                    " allways show status line
+set report=0                " : commands always print changed line count.
+set ruler                   " Show some info, even without statuslines.
+set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
+set showcmd                 " Show incomplete normal mode commands as I type.
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
+set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
 
 " displays tabs with :set list & displays when a line runs off-screen
 set listchars=tab:>-,trail:-,precedes:<,extends:>
 set list
 
 """ Searching and Patterns
+set hlsearch                " Highlight searches by default.
 set ignorecase              " Default to using case insensitive searches,
+set incsearch               " Incrementally search while typing a /regex
 set smartcase               " unless uppercase letters are used in the regex.
 set smarttab                " Handle tabs more intelligently 
-set hlsearch                " Highlight searches by default.
-set incsearch               " Incrementally search while typing a /regex
 
 "       __ __              __  ___                  _
 "      / //_/__  __  __   /  |/  /___ _____  ____  (_)___  ____ ______
@@ -234,19 +249,6 @@ inoremap # #
 
 colorscheme harlequin
 
-"""" Display
-if has("gui_running")
-    colorscheme desert
-    " Remove menu bar
-    set guioptions-=m
-
-    " Remove toolbar
-    set guioptions-=T
-else
-    colorscheme harlequin
-endif
-
-
 "       __
 "      / /   ____ _____  ____ ___  ______ _____ ____
 "     / /   / __ `/ __ \/ __ `/ / / / __ `/ __ `/ _ \
@@ -279,40 +281,3 @@ au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\
 
 " Don't let pyflakes use the quickfix window
 let g:pyflakes_use_quickfix = 0
-
-"   _    ________  ___   __________  __  _______
-"   | |  / /  _/  |/  /  / ____/ __ \/  |/  /  _/
-"   | | / // // /|_/ /  / /   / / / / /|_/ // /
-"   | |/ // // /  / /  / /___/ /_/ / /  / // /
-"   |___/___/_/  /_/   \____/_____/_/  /_/___/
-"
-"   I wrote a vim plugin for cdmi, you should check it out.
-"   http://www.github.com/mross462/vim-cdmi
-"   Here are the settings for it
-let g:cdmi_version="1.0.1"
-let g:cdmi_host="qa.mezeofile.com"
-let g:cdmi_user="administrator"
-let g:cdmi_adminpassword="wnxy68Z/CJYDIfDsJ9qoWg"
-let g:cdmi_secure="True"
-
-"       ,
-"              / \,,_  .'|
-"           ,{{| /}}}}/_.'            _____________________________________________
-"          }}}}` '{{'  '.            /                                             \
-"        {{{{{    _   ;, \          /            Ladies and Gentlemen,              \
-"     ,}}}}}}    /o`\  ` ;)        |                                                |
-"    {{{{{{   /           (        |                 this is ...                    |
-"    }}}}}}   |            \       |                                                |
-"   {{{{{{{{   \            \      |                                                |
-"   }}}}}}}}}   '.__      _  |     |    _____             __             __  _      |
-"   {{{{{{{{       /`._  (_\ /     |   / ___/__  ______  / /_____ ______/ /_(_)____ |
-"    }}}}}}'      |    //___/   --=:   \__ \/ / / / __ \/ __/ __ `/ ___/ __/ / ___/ |
-"   `{{{{`       |     '--'       |  ___/ / /_/ / / / / /_/ /_/ (__  ) /_/ / /__   |
-"     }}}`                         | /____/\__, /_/ /_/\__/\__,_/____/\__/_/\___/   |
-"                                  |      /____/                                    |
-"                                  |                                               /
-"                                   \_____________________________________________/
-
-let g:syntastic_check_on_open=1
-let g:syntastic_python_checkers=['flake8','pyflakes','pep8','pylint']
-let g:syntastic_javascript_checkers = ['jshint']
