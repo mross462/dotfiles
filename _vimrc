@@ -72,9 +72,7 @@ set mouse=a                   " Most computers these days have these,
 
 " Figure out which clipboard to use
 set clipboard=unnamed  " Share X windows clipboard.
-
 set encoding=utf-8 nobomb
-
 set binary                    " Don’t add empty newlines at the end of files
 set noeol                     "
 
@@ -215,6 +213,10 @@ set smarttab                " Handle tabs more intelligently
 "             /____/               /_/   /_/            /____/
 "
 "   Keystrokes that make doing things easier
+
+" Use code folding to obsure useless code
+nnoremap <C-u> zi
+nnoremap <C-f> za
 
 " Paste from clipboard
 map <leader>p "+p

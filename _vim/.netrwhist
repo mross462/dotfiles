@@ -1,8 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/Users/mross/repos/dotfiles/_vim'
-let g:netrw_dirhist_2='/var/www/prov'
-let g:netrw_dirhist_3='/var/www'
-let g:netrw_dirhist_4='/var/www/cas'
-let g:netrw_dirhist_5='/var/www'
-let g:netrw_dirhist_6='/var/www/prov'
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/mike.ross/repos/7eleven/apiv3'
+let g:netrw_dirhist_2='/Users/mike.ross/repos/7eleven'
+let g:netrw_dirhist_3='/Users/mike.ross/repos/7eleven/sherman_api'
+let g:netrw_dirhist_4='/Users/mike.ross/repos/dotfiles'
+let g:netrw_dirhist_5='/Users/mike.ross/repos/dotfiles/.vim'
+let g:netrw_dirhist_6='/Users/mike.ross/repos/dotfiles'
+let g:netrw_dirhist_7='/Users/mike.ross/repos/dotfiles/_vim'
+let g:netrw_dirhist_8='/Users/mike.ross/repos/dotfiles/_vim/bundle'
