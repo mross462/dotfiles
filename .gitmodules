@@ -4,6 +4,7 @@
     url = https://github.com/mross462/oh-my-zsh.git
 
 #VIM Submodules
+#
 [submodule "_vim/bundle/acp"]
     path = _vim/bundle/acp
     url = https://github.com/vim-scripts/AutoComplPop.git
@@ -31,6 +32,9 @@
 [submodule "_vim/bundle/pytest"]
     path = _vim/bundle/pytest
     url = https://github.com/alfredodeza/pytest.vim.git
+[submodule "_vim/bundle/ropevim"]
+    path = _vim/bundle/ropevim
+    url = https://github.com/python-rope/ropevim.git
 [submodule "_vim/bundle/syntastic"]
     path = _vim/bundle/syntastic
     url = https://github.com/scrooloose/syntastic.git
@@ -43,3 +47,7 @@
 [submodule "_vim/bundle/vimshell.vim"]
     path = .vim/bundle/vimshell
     url = https://github.com/Shougo/vimshell.vim
+[submodule "_vim/bundle/nerdtree"]
+    path = .vim/bundle/nerdtree
+    url = https://github.com/scrooloose/nerdtree
+
