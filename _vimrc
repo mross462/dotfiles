@@ -7,55 +7,6 @@
 " https://github.com/mross462/dotfiles
 "
 " Forked from: https://github.com/sontek/dotfiles 
-
-"
-" " ==========================================================
-" Dependencies - Libraries/Applications outside of vim
-" ==========================================================
-" Pep8 - http://pypi.python.org/pypi/pep8
-" Pyflakes
-" Ack
-" nose, django-nose
-
-" ==========================================================
-" Plugins included
-" ==========================================================
-" Pathogen
-"     Better Management of VIM plugins
-"
-" GunDo
-"     Visual Undo in vim with diff's to check the differences
-"
-" Pytest
-"     Runs your Python tests in Vim.
-"
-" Commant-T
-"     Allows easy search and opening of files within a given path
-"
-" Snipmate
-"     Configurable snippets to avoid re-typing common comands
-"
-" PyFlakes
-"     Underlines and displays errors with Python on-the-fly
-"
-" Fugitive
-"    Interface with git from vim
-"
-" Git
-"    Syntax highlighting for git config files
-"
-" Pydoc
-"    Opens up pydoc within vim
-"
-" Surround
-"    Allows you to surround text with open/close tags
-"
-" Py.test
-"    Run py.test test's from within vim
-"
-" MakeGreen
-"    Generic test runner that works with nose
-
 "       ________            ____             _
 "      /_  __/ /_  ___     / __ )____ ______(_)_________
 "       / / / __ \/ _ \   / __  / __ `/ ___/ / ___/ ___/
@@ -156,6 +107,7 @@ set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
 set cursorline              " have a line indicate the cursor location
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
 set foldmethod=indent       " allow us to fold on indents
+set foldlevel=1             " Lets us see classes and functions
 set linebreak               " don't wrap textin the middle of a word
 set matchpairs+=<:>         " show matching <> (html mainly) as well
 set nostartofline           " Avoid moving cursor to BOL when jumping around
@@ -214,8 +166,13 @@ set smarttab                " Handle tabs more intelligently
 "
 "   Keystrokes that make doing things easier
 
-" Use code folding to obsure useless code
+"
+nnoremap <C-g> :RopeGotoDefinition<CR>
+
+"Undfold everything control-u
 nnoremap <C-u> zi
+
+"Unfold at current cursor
 nnoremap <C-f> za
 
 " Paste from clipboard
@@ -226,6 +183,15 @@ nnoremap <leader>q :q<CR>
 
 " hide matches on <leader>space
 nnoremap <leader><space> :nohlsearch<cr>
+
+" whitespace makes my screen bleed
+function! TrimWhiteSpace()
+    %s/\s\+$//e
+endfunction
+autocmd FileType python,java autocmd FileWritePre    * :call TrimWhiteSpace()
+autocmd FileType python,java autocmd FileAppendPre   * :call TrimWhiteSpace()
+autocmd FileType python,java autocmd FilterWritePre  * :call TrimWhiteSpace()
+autocmd FileType python,java autocmd BufWritePre     * :call TrimWhiteSpace()
 
 " Remove trailing whitespace on <leader>S
 nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
@@ -282,3 +248,5 @@ au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\
 
 " Don't let pyflakes use the quickfix window
 let g:pyflakes_use_quickfix = 0
+
+autocmd vimenter * NERDTree

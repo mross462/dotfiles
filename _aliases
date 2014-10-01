@@ -141,4 +141,7 @@ alias reverse_shell=\'python -c 'import socket,subprocess,os;s=socket.socket(soc
 alias haskell= 'ghci'
 
 #Contextual Grep
-alias cgrep= 'grep -C5 $1 * -R'
+alias cgrep='grep -C5 $1 * -R'
+
+#Lazy
+alias ports='netstat -tulpn'
