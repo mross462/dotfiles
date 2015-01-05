@@ -19,3 +19,6 @@ export GIT_EDITOR="vim"
 #A More Colorful Less
 export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 export LESS=' -R '
+
+#Docker
+export DOCKER_HOST=tcp://localhost:4243
