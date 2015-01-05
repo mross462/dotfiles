@@ -184,6 +184,12 @@ nnoremap <leader>q :q<CR>
 " hide matches on <leader>space
 nnoremap <leader><space> :nohlsearch<cr>
 
+" Navication
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 " whitespace makes my screen bleed
 function! TrimWhiteSpace()
     %s/\s\+$//e

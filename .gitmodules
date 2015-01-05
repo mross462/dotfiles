@@ -52,4 +52,6 @@
 [submodule "_vim/bundle/nerdtree"]
     path = .vim/bundle/nerdtree
     url = https://github.com/scrooloose/nerdtree
-
+[submodule "_vim/bundle/excel"]
+    path = .vim/bundle/excel
+    url = https://github.com/yakiang/excel.vim
