@@ -6,7 +6,7 @@ alias starwars='telnet towel.blinkenlights.nl'
 alias ssh='ssh -v'
 
 #curl is pretty much useless without a -v option
-alias curl='curl -v'
+#alias curl='curl -v'
 
 # Navigation
 # Easier navigation: .., ..., ...., ....., ~ and -
