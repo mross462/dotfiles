@@ -145,3 +145,6 @@ alias cgrep='grep -C5 $1 * -R'
 
 #Lazy
 alias ports='netstat -tulpn'
+
+#List the contents of a command in $PATH
+alias catbin='which $1 | head -1 | xargs less'
