@@ -10,9 +10,7 @@ export GOPATH=$HOME/go
 
 #Set the python path
 PYTHONPATH=/Library/Python/2.7/site-packages:/usr/local/share/python:$PYTHONPATH
-
-
-PATH=/usr/local/sbin:/usr/local/bin:/usr/gam:es$GOROOT/bin:$GOPATH/bin:$PATH
+PATH=/usr/local/sbin:/usr/local/bin:/usr/games:$GOROOT/bin:$GOPATH/bin:/Users/michael/repos/creo-builder:$PATH
 
 
 #Color because it's better
