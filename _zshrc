@@ -2,6 +2,15 @@
 #Source our Exports First
 source $HOME/.exports
 
+#Echo the tasklist
+cat $HOME/repos/todo/todo
+
+#Aliases
+source $HOME/.aliases
+
+#Functions
+source $HOME/.functions
+
 #ZSH Stuff
 ZSH=$HOME/repos/dotfiles/_oh-my-zsh
 ZSH_THEME="mross"
@@ -11,10 +20,7 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(chef git jira pip urltools vagrant)
 source $ZSH/oh-my-zsh.sh
 
-#Aliases
-source $HOME/.aliases
-
-#Functions
-source $HOME/.functions
 
 
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

@@ -8,10 +8,12 @@
 export GOROOT=/usr/lib/go
 export GOPATH=$HOME/go
 
+#RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 #Set the python path
 PYTHONPATH=/Library/Python/2.7/site-packages:/usr/local/share/python:$PYTHONPATH
 PATH=/usr/local/sbin:/usr/local/bin:/usr/games:$GOROOT/bin:$GOPATH/bin:/Users/michael/repos/creo-builder/bin:$PATH
-
 
 #Color because it's better
 export TERM=xterm-256color

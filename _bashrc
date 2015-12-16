@@ -172,3 +172,5 @@ export GIT_EDITOR="$vim"
 
 # Add git and svn branch names
 export PS1="$PS1\$(parse_git_branch)\$(parse_svn_branch) "
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
