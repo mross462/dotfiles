@@ -151,3 +151,10 @@ alias catbin='which $1 | head -1 | xargs less'
 
 #Todo
 alias todo='vim $HOME/repos/todo/todo'
+
+#CP
+alias cp='cp -pR'
+
+#Issue
+alias issue='PWD=`pwd`; cd ~/repos/infrastructure; hub issue create; cd $PWD'
+alias issues='open https://www.github.com/venuenext/infrastructure/issues'

@@ -1,5 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/michael/repos/cloudformation-yankees/environments_config'
-let g:netrw_dirhist_2='/Users/michael/repos/cloudformation-yankees'
-let g:netrw_dirhist_3='/Users/michael/repos/cloudformation-yankees/environments_config'
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/michael/repos/cloudformation-compass/s3'
+let g:netrw_dirhist_2='/Users/michael/repos/creo-stacks'
+let g:netrw_dirhist_3='/Users/michael/repos/creo-stacks/lambda'
+let g:netrw_dirhist_4='/Users/michael/repos/creo-stacks'
+let g:netrw_dirhist_5='/Users/michael/repos/cloudformation-levisstadium/canopy'
+let g:netrw_dirhist_6='/Users/michael/repos/cloudformation-disney/elasticsearch'
+let g:netrw_dirhist_7='/Users/michael/repos/cloudformation-stanfordhealth/canopy'
+let g:netrw_dirhist_8='/Users/michael/repos/cloudformation-skel'
+let g:netrw_dirhist_9='/Users/michael/repos/dotfiles'

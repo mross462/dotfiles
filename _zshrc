@@ -17,10 +17,7 @@ ZSH_THEME="mross"
 COMPLETION_WAITING_DOTS="true"
 
 #Oh My ZSH Plugins
-plugins=(chef git jira pip urltools vagrant)
+plugins=(aws chef git jira pip urltools vagrant)
 source $ZSH/oh-my-zsh.sh
-
-
-
-
+source /usr/local/bin/aws_zsh_completer.sh
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

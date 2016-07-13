@@ -24,6 +24,8 @@
     co = checkout
     df = diff
     lg = log -p
+    pr = pull origin --rebase
+    por = push origin master
     up = !sh -c 'git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = ls-files

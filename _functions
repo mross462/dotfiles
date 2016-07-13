@@ -185,6 +185,7 @@ function redo_chef(){
     knife configure -u administrator -k ~/.chef/administrator.pem -s http://services.cloud:4000 --defaults -r .
 }
 
+
 #Quicksort Input
 qsort()
 {
@@ -198,3 +199,6 @@ function battery()
 {
     ioreg -l | awk '$3~/Capacity/{c[$3]=$5}END{OFMT="%.2f%%";max=c["\"MaxCapacity\""];print(max>0?100*c["\"CurrentCapacity\""]/max:"?")}'
 }
+
+#Attributes Grep
+agrep() {for i in $(find . -type f -name 'attributes*.json'); do echo $i; sops -d $i | grep $1; done}
