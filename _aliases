@@ -149,11 +149,11 @@ alias ports='netstat -tulpn'
 #List the contents of a command in $PATH
 alias catbin='which $1 | head -1 | xargs less'
 
-#Todo
-alias todo='vim $HOME/repos/todo/todo'
-
 #CP
 alias cp='cp -pR'
+
+#SSH Alisas
+alias ssh='ssh -A'
 
 #Issue
 alias issue='PWD=`pwd`; cd ~/repos/infrastructure; hub issue create; cd $PWD'
