@@ -202,3 +202,18 @@ function battery()
 
 #Attributes Grep
 agrep() {for i in $(find . -type f -name 'attributes*.json'); do echo $i; sops -d $i | grep $1; done}
+
+add-consul-elb() {
+    echo "Enter Customer: "
+    read c
+    REGIONS=(us-east-1 us-west-1 eu-central-1 eu-west-1 sa-east-1 ap-south-1 ap-northeast-2 ap-southeast-1 ap-southeast-2 ap-northeast-1)
+    for region in $REGIONS; do
+        aws ec2 --region $region describe-vpcs --filters 'Name=tag:Name,Values=$c' | jq -r '.Vpcs[].VpcId' && break
+    done
+    for e in `echo production staging`; do
+        aws ec2 --region $region describe-security-groups --filters "Name=tag:Name,Values=${c}-${e}-consul-elb"
+        group_id=`aws ec2 --region $region describe-security-groups --filters "Name=tag:Name,Values=${c}-${e}-consul-elb" | jq -r '.[][].GroupId'`
+        echo group_id: $group_id
+        aws ec2 authorize-security-group-ingress --region $region --group-id $group_id --protocol tcp --port 443 --cidr `dig +short myip.opendns.com @resolver1.opendns.com`/32
+    done
+}
