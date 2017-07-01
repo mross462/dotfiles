@@ -2,7 +2,6 @@
 [submodule "_oh-my-zsh"]
     path = _oh-my-zsh
     url = https://github.com/mross462/oh-my-zsh.git
-
 #VIM Submodules
 [submodule "_vim/bundle/acp"]
     path = _vim/bundle/acp

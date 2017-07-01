@@ -13,7 +13,7 @@ export GOPATH=$HOME/go
 
 #Set the python path
 PYTHONPATH=/Library/Python/2.7/site-packages:/usr/local/share/python:$PYTHONPATH
-PATH=~/repos/aws-tools:/usr/local/opt/android-sdk:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/sbin:/usr/local/bin:/usr/games:$GOROOT/bin:$GOPATH/bin:/Users/michael/repos/creo-builder/bin:$PATH
+PATH=~/repos/ihm-devops-tools/scripts:/usr/local/opt/android-sdk:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/sbin:/usr/local/bin:/usr/games:$GOROOT/bin:$GOPATH/bin:/Users/michael/repos/creo-builder/bin:$PATH
 
 #Color because it's better
 export TERM=xterm-256color
@@ -28,6 +28,6 @@ export LESS=' -R '
 
 #AWS CLI Completion
 source /usr/local/bin/aws_zsh_completer.sh
-
+source <(kubectl completion zsh)
 export REPOS=$HOME/repos
 
