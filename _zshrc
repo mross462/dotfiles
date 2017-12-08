@@ -1,9 +1,8 @@
 #!/bin/zsh
+REPOS="$HOME/repos"
+
 #Source our Exports First
 source $HOME/.exports
-
-#Echo the tasklist
-cat $HOME/repos/todo/todo
 
 #Aliases
 source $HOME/.aliases
@@ -11,13 +10,45 @@ source $HOME/.aliases
 #Functions
 source $HOME/.functions
 
+#IHM aliases
+source $REPOS/ihm-rc/.ihmrc
+
 #ZSH Stuff
 ZSH=$HOME/repos/dotfiles/_oh-my-zsh
 ZSH_THEME="mross"
 COMPLETION_WAITING_DOTS="true"
 
+# The following lines were added by compinstall
+zstyle :compinstall filename '~/.zshrc'
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
 #Oh My ZSH Plugins
-plugins=(aws chef git jira pip urltools vagrant)
+plugins=(aws \
+         brew \
+         common-aliases \
+         debian \
+         dircycle \
+         dirhistory \
+         docker \
+         fasd \
+         git-extras \
+         gitfast \
+         github \
+         gradle \
+         httpie \
+         jira \
+         mvn \
+         npm \
+         pip \
+         pyenv \
+         pyling \
+         python \
+         redis-cli \
+         supervisor \
+         urltools \
+         virtualenvwrapper \
+         websearch \
+         vagrant)
 source $ZSH/oh-my-zsh.sh
-source /usr/local/bin/aws_zsh_completer.sh
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

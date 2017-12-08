@@ -4,16 +4,17 @@
 #    / ____/ /_/ / /_/ / / /
 #   /_/    \__,_/\__/_/ /_/
 #
-#Set the go path
-export GOROOT=/usr/lib/go
-export GOPATH=$HOME/go
-
 #RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+#Go
+export GOROOT=/usr/local/opt/go/libexec/
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 #Set the python path
 PYTHONPATH=/Library/Python/2.7/site-packages:/usr/local/share/python:$PYTHONPATH
-PATH=$HOME/repos/aws-tools:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/sbin:/usr/local/bin:$GOPATH/bin:$PATH
+PATH=$HOME/repos/ihm-devops-tools/scripts:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$PATH
 
 #Color because it's better
 export TERM=xterm-256color
@@ -21,12 +22,5 @@ export TERM=xterm-256color
 #Use VIM as the default editor
 export EDITOR="vim"
 export GIT_EDITOR="vim"
-
-#A More Colorful Less
-export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-export LESS=' -R '
-
-#AWS CLI Completion
-source /usr/local/bin/aws_zsh_completer.sh
 
 export REPOS=$HOME/repos

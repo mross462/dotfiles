@@ -158,17 +158,14 @@ alias ssh='ssh -A'
 #IHM Stuff
 alias awsnonprod='echo 0 | awslogin.py > /dev/null | grep "Your New"; export AWS_DEFAULT_PROFILE=ihm'
 alias awsprod='echo 1 | awslogin.py > /dev/null | grep "Your New"; export AWS_DEFAULT_PROFILE=ihm'
-alias cikube="echo ci | setup-kube-localenv.sh && cat ~/.kube/config | yq -r '.users[].user.password' | head -n1"
-alias perfkube="echo perf | setup-kube-localenv.sh && cat ~/.kube/config | yq -r '.users[].user.password' | head -n1"
-alias stgkube="echo stg | setup-kube-localenv.sh && cat ~/.kube/config | yq -r '.users[].user.password' | head -n1"
-alias prodkube="echo prod | setup-kube-localenv.sh && cat ~/.kube/config | yq -r '.users[].user.password' | head -n1"
+alias cikube="echo ci | setup-kube-localenv.sh && KUBE_PASSWORD=`cat ~/.kube/config | yq -r '.users[].user.password' | head -n1`"
+alias perfkube="echo perf | setup-kube-localenv.sh && KUBE_PASSWORD=`cat ~/.kube/config | yq -r '.users[].user.password' | head -n1`"
+alias stgkube="echo stg | setup-kube-localenv.sh && KUBE_PASSWORD=`cat ~/.kube/config | yq -r '.users[].user.password' | head -n1`"
+alias prodkube="echo prod | setup-kube-localenv.sh && KUBE_PASSWORD=`cat ~/.kube/config | yq -r '.users[].user.password' | head -n1`"
 alias ci="awsnonprod && cikube"
 alias perf="awsnonprod && perfkube"
 alias stg="awsnonprod && stgkube"
 alias prod="awsprod && prodkube"
-kubebash(){
-  echo Opening bash prompt on ${1} in environment `python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < ~/.kube/config | jq -r '.clusters[0].name'` && kubectl -it exec ${1} bash
-}
-kubesh(){
-  echo Opening sh prompt on ${1} in environment `python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < ~/.kube/config | jq -r '.clusters[0].name'` && kubectl -it exec ${1} sh
-}
+dashboard(){echo Use admin:`cat ~/.kube/config | yq -r '.users[].user.password' | head -n1` for credentials; open "https://api.k8s-${1}.x1-nonprod.iheartmedia.com/ui/"}
+kubebash(){echo Opening bash prompt on ${1} in environment `python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < ~/.kube/config | jq -r '.clusters[0].name'` && kubectl -it exec ${1} bash}
+kubesh(){echo Opening sh prompt on ${1} in environment `python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < ~/.kube/config  | jq -r '.clusters[0].name'` && kubectl -it exec ${1} sh}
