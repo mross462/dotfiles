@@ -1,9 +1,4 @@
 #ZSH Submodules
-[submodule "_oh-my-zsh"]
-    path = _oh-my-zsh
-    url = https://github.com/mross462/oh-my-zsh.git
-
-#VIM Submodules
 [submodule "_vim/bundle/acp"]
     path = _vim/bundle/acp
     url = https://github.com/vim-scripts/AutoComplPop.git
@@ -55,3 +50,6 @@
 [submodule "_vim/bundle/excel"]
     path = .vim/bundle/excel
     url = https://github.com/yakiang/excel.vim
+[submodule "_zprezto/"]
+    path = .zprezto/
+    url = https://github.com/sorin-ionescu/prezto.git

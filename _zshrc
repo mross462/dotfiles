@@ -1,6 +1,11 @@
 #!/bin/zsh
 REPOS="$HOME/repos"
 
+#History is important.
+HISTFILE=~/.zsh_history
+HISTSIZE=999999999
+SAVEHIST=$HISTSIZE
+
 #Source our Exports First
 source $HOME/.exports
 
@@ -10,45 +15,9 @@ source $HOME/.aliases
 #Functions
 source $HOME/.functions
 
-#IHM aliases
-source $REPOS/ihm-rc/.ihmrc
+#Prezto
+source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+prompt minimal
 
-#ZSH Stuff
-ZSH=$HOME/repos/dotfiles/_oh-my-zsh
-ZSH_THEME="mross"
-COMPLETION_WAITING_DOTS="true"
-
-# The following lines were added by compinstall
-zstyle :compinstall filename '~/.zshrc'
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-
-#Oh My ZSH Plugins
-plugins=(aws \
-         brew \
-         common-aliases \
-         debian \
-         dircycle \
-         dirhistory \
-         docker \
-         fasd \
-         git-extras \
-         gitfast \
-         github \
-         gradle \
-         httpie \
-         jira \
-         mvn \
-         npm \
-         pip \
-         pyenv \
-         pyling \
-         python \
-         redis-cli \
-         supervisor \
-         urltools \
-         virtualenvwrapper \
-         websearch \
-         vagrant)
-source $ZSH/oh-my-zsh.sh
+# added by travis gem
+[ -f /Users/michael.ross/.travis/travis.sh ] && source /Users/michael.ross/.travis/travis.sh
