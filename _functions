@@ -100,65 +100,6 @@ function findit() {
     find . -name \* -exec grep -iH $1 {} \;
 }
 
-function curlcdmi() {
-    echo
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: curlcdmi <user>:<password> <URL>"
-        exit 1
-    fi
-    curl -H 'X-CDMI-Specification-Version: 1.0.1' -H 'Accept: */*' -u  $1 $2 | python -mjson.tool;
-}
-
-function createCDMIContainer() {
-    echo
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: createCDMIContianer <user>:<password> <URL>"
-        exit 1
-    fi
-    curl -v -k -u $1 -H 'content-type: application/cdmi-container' \
-            --data-binary '{"metadata":{}}' $2 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
-    curl -H 'X-CDMI-Specification-Version: 1.0.1' -H 'Accept: */*' -k -u $1 -v $2 | python -mjson.tool;
-}
-
-function deleteCDMIobject() {
-    echo
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: createCDMIContianer <user>:<password> <URL>"
-        exit 1
-    fi
-    curl -v -k -u $1 -H 'content-type: application/cdmi-container' \
-            --data-binary '{"metadata":{}}' $2 -X DELETE -H 'X-CDMI-Specification-Version: 1.0.1'
-    curl -H 'X-CDMI-Specification-Version: 1.0.1' -H 'Accept: */*' -k -u $1 -v $2 | python -mjson.tool;
-}
-
-function createCDMIDataObject() {
-    echo
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: createCDMIDataObject <user>:<password> <URL>"
-        exit 1
-    fi
-    curl -v -k -u $1 -H 'content-type: application/cdmi-object' \
-         --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Hello CDMI World!"}'  \
-         $2 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
-    curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-         -H 'Accept: */*' \
-         -k -u administrator:mezeo https://$1 | python -mjson.tool;
-}
-
-function updateCDMIDataObject() {
-    echo
-    if [ "$#" -ne 2 ]; then
-        echo "Usage: createCDMIDataObject <user>:<password> <URL>"
-        exit 1
-    fi
-    curl -v -k -u administrator:mezeo -H 'content-type: application/cdmi-object' \
-        --data-binary '{"mimetype" : "text/plain", "metadata" : {},"value" : "Foggy"}' \
-        https://$1 -X PUT -H 'X-CDMI-Specification-Version: 1.0.1'
-    curl -H 'X-CDMI-Specification-Version: 1.0.1' \
-                    -H 'Accept: */*' \
-                    -k -u administrator:mezeo https://$1 | python -mjson.tool;
-}
-
 function accountInfo(){
     echo "☁  MezeoCloud Says:"
     echo 'Cloud Resource:'
@@ -167,16 +108,6 @@ function accountInfo(){
     echo 'Account Resource'
     curl -k -u $1:$2 https://$3/v2/account -H 'Content-Type: application/vnd.csp.account-info2+json' -H 'Accept: application/vnd.csp.account-info2+json' | python2.6 -mjson.tool
     echo
-}
-
-function updateMyBox(){
-    echo 'Updating Development Vagrant Box'
-    cd $HOME/dev
-    vagrant destroy -f
-    vagrant up mybox
-    vagrant package mybox --output mybox.box
-    vagrant box add mybox.box
-    rm -rf mybox.box
 }
 
 function redo_chef(){
@@ -216,4 +147,8 @@ add-consul-elb() {
         echo group_id: $group_id
         aws ec2 authorize-security-group-ingress --region $region --group-id $group_id --protocol tcp --port 443 --cidr `dig +short myip.opendns.com @resolver1.opendns.com`/32
     done
+}
+
+jump() {
+    ssh -J mross@$(cat ~/.homeip) $1-jumphost.venuenext.net
 }
