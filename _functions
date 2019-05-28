@@ -150,5 +150,5 @@ add-consul-elb() {
 }
 
 jump() {
-    ssh -J mross@$(cat ~/.homeip) $1-jumphost.venuenext.net
+    ssh -A -J mross@$(cat ~/.homeip) $1-jumphost.venuenext.net
 }
