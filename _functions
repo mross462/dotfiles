@@ -100,23 +100,6 @@ function findit() {
     find . -name \* -exec grep -iH $1 {} \;
 }
 
-function accountInfo(){
-    echo "☁  MezeoCloud Says:"
-    echo 'Cloud Resource:'
-    curl -k -u $1:$2 https://$3/v2 -H 'X-Client-Specification: 3' \-H 'Content-Type: application/vnd.csp.cloud+json' | python2.6 -mjson.tool
-    echo
-    echo 'Account Resource'
-    curl -k -u $1:$2 https://$3/v2/account -H 'Content-Type: application/vnd.csp.account-info2+json' -H 'Accept: application/vnd.csp.account-info2+json' | python2.6 -mjson.tool
-    echo
-}
-
-function redo_chef(){
-    knife client delete administrator
-    cp $HOME/dev/services/chef_server/creds/*.pem ~/.chef/
-    knife configure -u administrator -k ~/.chef/administrator.pem -s http://services.cloud:4000 --defaults -r .
-}
-
-
 #Quicksort Input
 qsort()
 {
@@ -130,9 +113,6 @@ function battery()
 {
     ioreg -l | awk '$3~/Capacity/{c[$3]=$5}END{OFMT="%.2f%%";max=c["\"MaxCapacity\""];print(max>0?100*c["\"CurrentCapacity\""]/max:"?")}'
 }
-
-#Attributes Grep
-agrep() {for i in $(find . -type f -name 'attributes*.json'); do echo $i; sops -d $i | grep $1; done}
 
 add-consul-elb() {
     echo "Enter Customer: "
@@ -151,4 +131,148 @@ add-consul-elb() {
 
 jump() {
     ssh -A -J mross@$(cat ~/.homeip) $1-jumphost.venuenext.net
+}
+
+oplogin () {
+eval $(op signin vn_infrastructure)
+}
+
+#tsh login
+tshto () {
+  which yq > /dev/null 2>&1 || echo install yq
+  which op  > /dev/null 2>&1 || echo install op
+  yaml=$(vn infra ecosystem $1)
+  ecosystem=$(echo $yaml | tail -n +2 | yq -r .name)
+  env_type=$(echo $yaml | tail -n +2 | yq -r .env_type)
+  echo Getting Credentials From Onepassword for "$ecosystem $env_type teleport login"
+  echo Please login using your onepassword master password
+  eval $(op signin vn_infrastructure)
+  opjson=$(op get item "$ecosystem $env_type teleport login") ||
+  username=$(echo ${opjson} | jq -r '.details.fields[] | select(.name == "username").value')
+  password=$(echo ${opjson} | jq -r '.details.fields[] | select(.name == "password").value')
+  echo $password | pbcopy
+  echo Password coppied to clipboard, paste below.
+  tsh login --proxy=teleport."$@".vnops.net --user=$username
+}
+
+jump(){
+  echo "Please enter destination ECOSYSTEM: "
+  read ECOSYSTEM
+  echo "Please enter destination ENVTYPE: "
+  read ENVTYPE
+  eval $(op signin vn_infrastructure)
+  rm -rf ~/.ssh/${ECOSYSTEM}_${ENVTYPE}
+  op get item "${ECOSYSTEM}-${ENVTYPE} ssh key" --vault=InfraNext | jq -r ".details.notesPlain" | sed '1d;$d' > ~/.ssh/${ECOSYSTEM}_${ENVTYPE}
+  op get item "${ECOSYSTEM}-${ENVTYPE} ssh key" --vault=InfraNext | jq -r ".details.password"
+  chmod 400 ~/.ssh/${ECOSYSTEM}_${ENVTYPE}
+  /usr/bin/ssh -i ~/.ssh/${ECOSYSTEM}_${ENVTYPE} ubuntu@jumphost.${ECOSYSTEM}.vnops.net
+}
+
+function vnops () {
+    local cmd=""
+    local cdto="$PWD"
+    local args="$@"
+
+    if [ -d "$1" ]; then
+        cdto=`cd "$1"; pwd`
+        args="${@:2}"
+    fi
+
+    if [ -n "$args" ]; then
+        cmd="; $args"
+    fi
+
+    osascript &>/dev/null <<EOF
+    tell application "iTerm2"
+        set newWindow to (create window with default profile)
+    end tell
+EOF
+}
+
+function watchpods () {
+    local cmd=""
+    local cdto="$PWD"
+    local args="$@"
+
+    if [ -d "$1" ]; then
+        cdto=`cd "$1"; pwd`
+        args="${@:2}"
+    fi
+
+    if [ -n "$args" ]; then
+        cmd="; $args"
+    fi
+
+    osascript &>/dev/null <<EOF
+    tell application "iTerm2"
+        set newWindow to (create window with default profile)
+        tell current session of newWindow
+            write text "watch kubectl -n prd get pods"
+        end tell
+    end tell
+EOF
+}
+
+function venuenext () {
+    local cmd=""
+    local cdto="$PWD"
+    local args="$@"
+
+    if [ -d "$1" ]; then
+        cdto=`cd "$1"; pwd`
+        args="${@:2}"
+    fi
+
+    if [ -n "$args" ]; then
+        cmd="; $args"
+    fi
+
+    osascript &>/dev/null <<EOF
+    tell application "iTerm2"
+        set newWindow to (create window with default profile)
+        tell current session of newWindow
+            write text "export AWS_DEFAULT_PROFILE=venuenext"
+        end tell
+    end tell
+EOF
+}
+
+function vnon () {
+    local cmd=""
+    local cdto="$PWD"
+    local args="$@"
+
+    if [ -d "$1" ]; then
+        cdto=`cd "$1"; pwd`
+        args="${@:2}"
+    fi
+
+    if [ -n "$args" ]; then
+        cmd="; $args"
+    fi
+
+    osascript &>/dev/null <<EOF
+    tell application "iTerm2"
+        set newWindow to (create window with default profile)
+        tell current session of newWindow
+            write text "export AWS_DEFAULT_PROFILE=vnon"
+        end tell
+    end tell
+EOF
+}
+
+infranext () {
+osascript &>/dev/null <<EOF
+tell application "iTerm2"
+    set ${1} to (create window with default profile)
+    tell current session of ${1}
+        write text "export AWS_DEFAULT_PROFILE=vnops
+                    tsh login --proxy=teleport.${1}.vnops.net
+                    export ECOSYSTEM=${1}
+                    eval $(vn infra ecosystem ${1} --output env)
+                    alias kubectl='kubectl --context ${1}'
+                   "
+    end tell
+end tell
+EOF
 }
