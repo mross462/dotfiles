@@ -1,6 +1,6 @@
 [user]
-    name = Mike Ross
-    email = mross462@gmail.com
+	name = Michael Ross
+	email = michael.ross@venuenext.com
 
 [color]
     diff = auto
@@ -38,3 +38,5 @@
 [mergetool "vimdiff"]
     cmd = vimdiff \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
     trustExitCode = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/

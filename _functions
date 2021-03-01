@@ -5,6 +5,15 @@
 #    /____/\__, /____/\__/\___/_/ /_/ /_/
 #         /____/
 
+# Fingerprint Sudo For Macbooks.
+sudo() {
+  unset -f sudo
+  if [[ "$(uname)" == 'Darwin' ]] && ! grep 'pam_tid.so' /etc/pam.d/sudo --silent; then
+    sudo sed -i -e '1s;^;auth       sufficient     pam_tid.so\n;' /etc/pam.d/sudo
+  fi
+  sudo "$@"
+}
+
 # Create a new directory and enter it
 function mkd() {
     mkdir -p "$@" && cd "$@"
@@ -261,18 +270,36 @@ function vnon () {
 EOF
 }
 
-infranext () {
-osascript &>/dev/null <<EOF
+next () {
+	osascript &> /dev/null <<EOF
 tell application "iTerm2"
     set ${1} to (create window with default profile)
     tell current session of ${1}
-        write text "export AWS_DEFAULT_PROFILE=vnops
-                    tsh login --proxy=teleport.${1}.vnops.net
-                    export ECOSYSTEM=${1}
-                    eval $(vn infra ecosystem ${1} --output env)
-                    alias kubectl='kubectl --context ${1}'
-                   "
+        write text "
+export CONTAINER_NAME=next-${1}
+docker container kill next-${1}
+docker container rm next-${1}
+rm -rf $HOME/.tsh/
+tsh login --proxy=teleport.${1}.vnops.net
+docker run --name next-${1} \
+           --env ECOSYSTEM=${1} \
+           -v $HOME/.aws:/root/.aws \
+           -v $HOME/.venuenext/:/root/.venuenext \
+           -v $HOME/.op/:/root/.op \
+           -v $HOME/.ssh/:/root/.ssh \
+           -v $HOME/repos:/root/repos \
+           venuenext-docker.jfrog.io/eksutils:latest &
+sleep 1
+docker cp $HOME/.kube/. next-${1}:/root/.kube/.
+docker exec --interactive --tty next-${1} /bin/bash
+"
     end tell
 end tell
 EOF
+}
+
+killnext(){
+docker stop $(docker ps -aq)
+docker rm $(docker ps | grep "next-" | grep -v "CONTAINER" | awk '{print $1}')
+docker rmi $(docker images -q)
 }

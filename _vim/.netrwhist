@@ -1,8 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/Users/michael.ross/repos/consul-server/.creo/files/etc/systemd/system'
-let g:netrw_dirhist_2='/Users/michael.ross/repos/consul-server/.creo/files/etc/systemd'
-let g:netrw_dirhist_3='/Users/michael.ross/repos/consul-server/.creo/files/etc/systemd/system'
-let g:netrw_dirhist_4='/Users/michael.ross/repos/ecosystems/creo/consul'
-let g:netrw_dirhist_5='/Users/michael.ross'
-let g:netrw_dirhist_6='/Users'
+let g:netrw_dirhist_cnt =0

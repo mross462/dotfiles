@@ -89,9 +89,6 @@ alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Re
 # find . -name .gitattributes | map dirname
 alias map="xargs -n1"
 
-#Speedtest
-alias speedtest="wget --output-document=/dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
-
 #Generate a random password
 alias genpasswd="openssl rand -base64 32"
 
@@ -118,10 +115,3 @@ alias catbin='which $1 | head -1 | xargs less'
 
 #CP
 alias cp='cp -pR'
-
-#IHM Stuff
-alias awsnonprod='echo 0 | awslogin.py > /dev/null | grep "Your New"; export AWS_DEFAULT_PROFILE=ihm'
-alias awsprod='echo 1 | awslogin.py > /dev/null | grep "Your New"; export AWS_DEFAULT_PROFILE=ihm'
-dashboard(){echo Use admin:`cat ~/.kube/config | yq -r '.users[].user.password' | head -n1` for credentials; open "https://api.k8s-${1}.x1-nonprod.iheartmedia.com/ui/"}
-kubebash(){echo Opening bash prompt on ${1} in environment `python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < ~/.kube/config | jq -r '.clusters[0].name'` && kubectl -it exec ${1} bash}
-kubesh(){echo Opening sh prompt on ${1} in environment `python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < ~/.kube/config  | jq -r '.clusters[0].name'` && kubectl -it exec ${1} sh}

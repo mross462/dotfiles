@@ -4,28 +4,24 @@
 #    / ____/ /_/ / /_/ / / /
 #   /_/    \__,_/\__/_/ /_/
 #
+
 #Set the python path
 export PYTHONPATH=/usr/local/share/python:/Library/Python/2.7/site-packages:$PYTHONPATH
-export PATH=/usr/local/opt/ruby/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$REPOS/aws-tools:$REPOS/creo-builder/bin:$REPOS/infra-scripts/bin:$PATH
+export PATH=/usr/local/opt/ruby/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$REPOS/aws-tools:$REPOS/creo-builder/bin:$REPOS/infra-scripts/bin:$HOME/.serverless/bin:$PATH
 
 #RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 #SOPS
 export SOPS_KMS_ARN="arn:aws:kms:us-east-1:510844141347:key/4cf0e14b-f665-42ac-bd58-531776e0cf36,arn:aws:kms:us-west-2:510844141347:key/781d07f9-87c6-4580-807c-f7e0e3c889ca"
-export SOPS_PGP_FP="85D77543B3D624B63CEA9E6DBC17301B491B3F21,E60892BB9BD89A69F759A1A0A3D652173B763E8F"
+# Disabling temporarily export SOPS_PGP_FP="CD3D17F626DCB52EF6AF4E52BFBB7155CA87EF78,D0D9BD577ED4709C3C948319041A14937B4AD2A8"
 
 #Go
 export GOROOT=/usr/local/opt/go/libexec/
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 export PROJECT_HOME=$HOME/code
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-source /usr/local/bin/virtualenvwrapper.sh
 
 #Color because it's better
 export TERM=xterm-256color
