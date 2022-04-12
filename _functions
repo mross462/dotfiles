@@ -222,76 +222,52 @@ function watchpods () {
 EOF
 }
 
-function venuenext () {
-    local cmd=""
-    local cdto="$PWD"
-    local args="$@"
+function vsh(){
+  export ECOSYSTEM="${1}"
+  tsh login --proxy=teleport.$ECOSYSTEM.vnops.net:3080
+  rm -rf ~/.kube/config
+  tsh kube login $ECOSYSTEM
+}
 
-    if [ -d "$1" ]; then
-        cdto=`cd "$1"; pwd`
-        args="${@:2}"
-    fi
-
-    if [ -n "$args" ]; then
-        cmd="; $args"
-    fi
-
-    osascript &>/dev/null <<EOF
-    tell application "iTerm2"
-        set newWindow to (create window with default profile)
-        tell current session of newWindow
-            write text "export AWS_DEFAULT_PROFILE=venuenext"
-        end tell
-    end tell
+function create_zshrc(){
+eval $(vn infra ecosystem ${1} --output=env)
+rm -rf /tmp/teleport-zshrc-${1}
+cat << EOF > /tmp/teleport-zshrc-${1}
+#!/bin/zsh
+tsh login --proxy=teleport.${1}.vnops.net:3080 --bind-addr=0.0.0.0:$(shuf -i 9000-9999 -n 1)
+kubectl config use-context ${1}-${1}
+eval $(vn infra ecosystem ${1} --output=env)
+setopt PROMPT_SUBST
+PROMPT="%n ${1}-$ENVTYPE ($ENVS) » "
 EOF
 }
 
-function vnon () {
-    local cmd=""
-    local cdto="$PWD"
-    local args="$@"
-
-    if [ -d "$1" ]; then
-        cdto=`cd "$1"; pwd`
-        args="${@:2}"
-    fi
-
-    if [ -n "$args" ]; then
-        cmd="; $args"
-    fi
-
-    osascript &>/dev/null <<EOF
-    tell application "iTerm2"
-        set newWindow to (create window with default profile)
-        tell current session of newWindow
-            write text "export AWS_DEFAULT_PROFILE=vnon"
-        end tell
-    end tell
-EOF
-}
-
-next () {
-	osascript &> /dev/null <<EOF
+function next () {
+create_zshrc ${1}
+osascript &> /dev/null <<EOF
 tell application "iTerm2"
     set ${1} to (create window with default profile)
     tell current session of ${1}
         write text "
-export CONTAINER_NAME=next-${1}
 docker container kill next-${1}
 docker container rm next-${1}
-rm -rf $HOME/.tsh/
-tsh login --proxy=teleport.${1}.vnops.net
+
+#Start the container
 docker run --name next-${1} \
            --env ECOSYSTEM=${1} \
-           -v $HOME/.aws:/root/.aws \
-           -v $HOME/.venuenext/:/root/.venuenext \
-           -v $HOME/.op/:/root/.op \
-           -v $HOME/.ssh/:/root/.ssh \
-           -v $HOME/repos:/root/repos \
+           --env AWS_DEFAULT_PROFILE=vnops \
+           -v $HOME/.aws:/home/vn/.aws \
+           -v $HOME/.venuenext/:/home/vn/.venuenext \
+           -v $HOME/.op/:/home/vn/.op \
+           -v $HOME/.ssh/:/home/vn/.ssh \
+           -v $HOME/repos:/home/vn/repos \
+           -p $(cat /tmp/teleport-zshrc-${1} | grep bind | awk -F: '{print $3}'):$(cat /tmp/teleport-zshrc-${1} | grep bind | awk -F: '{print $3}')  \
            venuenext-docker.jfrog.io/eksutils:latest &
-sleep 1
-docker cp $HOME/.kube/. next-${1}:/root/.kube/.
-docker exec --interactive --tty next-${1} /bin/bash
+sleep 5
+
+docker cp /tmp/teleport-zshrc-mars next-${1}:/home/vn/.zshrc
+
+docker exec -it next-${1} /bin/zsh
 "
     end tell
 end tell
