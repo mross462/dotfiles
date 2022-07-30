@@ -20,4 +20,4 @@ source "${HOME}/.zgen/zgen.zsh"
 zgen load zsh-users/zsh-history-substring-search
 zgen load zsh-users/zsh-autosuggestions
 zgen load zsh-users/zsh-completions
-prompt minimal
+zgen prezto prompt minimal
