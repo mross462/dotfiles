@@ -229,8 +229,18 @@ function vsh(){
   tsh kube login $ECOSYSTEM
 }
 
-function create_zshrc(){
+function restart(){
 eval $(vn infra ecosystem ${1} --output=env)
+eval "ENVS=($ENVS)" 
+for env in ${ENVS[@]}; do 
+    deployments=$(kubectl -n $env get deployments | grep "$1" | awk '{print $1}')
+    for dep in deploymments; do 
+        kubectl -n $env rollout restart deployment/$dep
+    done; 
+done
+}
+
+function create_zshrc(){
 rm -rf /tmp/teleport-zshrc-${1}
 cat << EOF > /tmp/teleport-zshrc-${1}
 #!/bin/zsh
@@ -238,12 +248,17 @@ tsh login --proxy=teleport.${1}.vnops.net:3080 --bind-addr=0.0.0.0:$(shuf -i 900
 kubectl config use-context ${1}-${1}
 eval $(vn infra ecosystem ${1} --output=env)
 setopt PROMPT_SUBST
-PROMPT="%n ${1}-$ENVTYPE ($ENVS) » "
+PROMPT="%n ${1}-\$ENVTYPE (\$ENVS) » "
 EOF
+echo $(which restart) >> /tmp/teleport-zshrc-${1}
 }
 
 function next () {
-export AWS_PROFILE=vno
+if ! [ -x "$(command -v docker)" ]; then
+  echo 'Error: docker is not installed. Install and login with: \ 
+        docker login venuenext-docker.jfog.io ' >&2
+  exit 1
+fi
 create_zshrc ${1}
 if [[ "$(uname)" == 'Darwin' ]]; then
 osascript &> /dev/null <<EOF
