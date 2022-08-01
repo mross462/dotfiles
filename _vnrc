@@ -6,13 +6,11 @@ function vsh(){
 }
 
 function restart(){
-eval "ENVS=($ENVS)" 
-for env in ${ENVS[@]}; do 
-    deployments=$(kubectl -n $env get deployments | grep "$1" | awk '{print $1}')
-    for dep in deploymments; do 
-        kubectl -n $env rollout restart deployment/$dep
-    done; 
-done
+    for e in `echo $ENVS`; do
+        for d in `kubectl -n $e get deployments -o=name | grep "${1}"`; do 
+            kubectl -n $e rollout restart $d
+        done
+    done
 }
 
 function create_ecosystem_zshrc(){
@@ -21,11 +19,13 @@ cat << EOF > /tmp/teleport-zshrc-${1}
 #!/bin/zsh
 tsh login --proxy=teleport.${1}.vnops.net:3080 --bind-addr=0.0.0.0:$(shuf -i 9000-9999 -n 1)
 kubectl config use-context ${1}-${1}
-eval $(vn infra ecosystem ${1} --output=env)
+export AWS_PROFILE=vno
 setopt PROMPT_SUBST
-PROMPT="%n ${1}-\$ENVTYPE (\$ENVS) » "
 EOF
-echo $(which restart) >> /tmp/teleport-zshrc-${1}
+echo $(vn infra ecosystem ${1} --output=env) >> /tmp/teleport-zshrc-${1}
+echo 'PROMPT="%n ${ECOSYSTEM}-\$ENVTYPE (\$ENVS) » "' >> /tmp/teleport-zshrc-${1}
+echo "$(which restart)" >> /tmp/teleport-zshrc-${1}
+
 }
 
 function next () {
