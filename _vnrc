@@ -1,3 +1,6 @@
+export AWS_DEFAULT_PROFILE=vno
+export AWS_PROFILE=vno
+
 function vsh(){
   export ECOSYSTEM="${1}"
   tsh login --proxy=teleport.$ECOSYSTEM.vnops.net:3080
@@ -13,9 +16,10 @@ function restart(){
     done
 }
 
-function create_ecosystem_zshrc(){
+function create_ecosystem_zshrc() {
 rm -rf /tmp/teleport-zshrc-${1}
-cat << EOF > /tmp/teleport-zshrc-${1}
+touch /tmp/teleport-zshrc-${1}
+cat <<EOF >> /tmp/teleport-zshrc-${1}
 #!/bin/zsh
 tsh login --proxy=teleport.${1}.vnops.net:3080 --bind-addr=0.0.0.0:$(shuf -i 9000-9999 -n 1)
 kubectl config use-context ${1}-${1}
@@ -23,9 +27,8 @@ export AWS_PROFILE=vno
 setopt PROMPT_SUBST
 EOF
 echo $(vn infra ecosystem ${1} --output=env) >> /tmp/teleport-zshrc-${1}
-echo 'PROMPT="%n ${ECOSYSTEM}-\$ENVTYPE (\$ENVS) » "' >> /tmp/teleport-zshrc-${1}
 echo "$(which restart)" >> /tmp/teleport-zshrc-${1}
-
+echo 'PROMPT="%n ${ECOSYSTEM}-\$ENVTYPE (\$ENVS) » "' >> /tmp/teleport-zshrc-${1}
 }
 
 function next () {
@@ -43,7 +46,8 @@ tell application "iTerm2"
         write text "
 docker container kill next-${1}
 docker container rm next-${1}
-
+port=$(cat /tmp/teleport-zshrc-${1} | grep 'bind' | awk -F: '{print $3}')
+set -i
 #Start the container
 docker run --name next-${1} \
            --env ECOSYSTEM=${1} \
@@ -53,12 +57,11 @@ docker run --name next-${1} \
            -v $HOME/.op/:/home/node/.op \
            -v $HOME/.ssh/:/home/node/.ssh \
            -v $HOME/repos:/home/node/repos \
-           -p $(cat /tmp/teleport-zshrc-${1} | grep bind | awk -F: '{print $3}'):$(cat /tmp/teleport-zshrc-${1} | grep bind | awk -F: '{print $3}')  \
+           --platform linux/amd64 \
+           -p $(cat /tmp/teleport-zshrc-${1} | grep 'bind' | awk -F: '{print $3}'):$(cat /tmp/teleport-zshrc-${1} | grep 'bind' | awk -F: '{print $3}')  \
            venuenext-docker.jfrog.io/eksutils:latest &
-sleep 5
-
-docker cp /tmp/teleport-zshrc-mars next-${1}:/home/node/.zshrc
-
+until docker ps | grep ${1} | grep Up; do sleep 1; done
+docker cp /tmp/teleport-zshrc-${1} next-${1}:/home/node/.zshrc
 docker exec -it next-${1} /bin/zsh
 "
     end tell
@@ -78,12 +81,11 @@ else
              -v $HOME/.op/:/home/node/.op:z \
              -v $HOME/.ssh/:/home/node/.ssh:z \
              -v $HOME/repos:/home/node/repos:z \
-             -p $(cat /tmp/teleport-zshrc-${1} | grep bind | awk -F: '{print $3}'):$(cat /tmp/teleport-zshrc-${1} | grep bind | awk -F: '{print $3}')  \
+             -p $(cat /tmp/teleport-zshrc-${1} | grep "bind" | awk -F: '{print $3}'):$(cat /tmp/teleport-zshrc-${1} | grep "bind" | awk -F: '{print $3}')  \
              venuenext-docker.jfrog.io/eksutils:latest &
-  until docker ps | grep $ECOSYSTEM | grep Up; do sleep 1; done
+  until docker ps | grep ${1} | grep Up; do sleep 1; done
   docker cp /tmp/teleport-zshrc-${1} next-${1}:/home/node/.zshrc
   docker exec -it next-${1} /bin/zsh
-  exec bash
   "
 fi
 }

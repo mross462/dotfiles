@@ -7,7 +7,7 @@
 
 #Set the python path
 export PYTHONPATH=/usr/local/share/python:/Library/Python/2.7/site-packages:$PYTHONPATH
-export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:/usr/local/opt/ruby/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$REPOS/aws-tools:$REPOS/creo-builder/bin:$REPOS/infra-scripts/bin:$HOME/.serverless/bin:$PATH
+export PATH=/opt/homebrew/opt/grep/libexec/gnubin:/usr/local/opt/ruby/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$GOPATH/bin:$REPOS/aws-tools:$REPOS/creo-builder/bin:$REPOS/infra-scripts/bin:$HOME/.serverless/bin:$PATH
 
 #RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
@@ -20,7 +20,6 @@ export SOPS_KMS_ARN="arn:aws:kms:us-east-1:510844141347:key/4cf0e14b-f665-42ac-b
 export GOROOT=/usr/local/opt/go/libexec/
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-
 export PROJECT_HOME=$HOME/code
 
 #Color because it's better
