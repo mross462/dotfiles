@@ -138,10 +138,6 @@ add-consul-elb() {
     done
 }
 
-jump() {
-    ssh -A -J mross@$(cat ~/.homeip) $1-jumphost.venuenext.net
-}
-
 oplogin () {
 eval $(op signin vn_infrastructure)
 }
@@ -220,4 +216,15 @@ function watchpods () {
         end tell
     end tell
 EOF
+}
+
+function account () {
+env_path=$HOME/.config/op/$1-env
+rm -f $env_path
+eval $(op signin --account vn-infrastructure.1password.com)
+cat <<EOF > $env_path
+AWS_ACCESS_KEY_ID=op://Private/aws_$1/AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY=op://Private/aws_$1/AWS_SECRET_ACCESS_KEY
+EOF
+alias aws="op run --env-file=$env_path -- aws"
 }

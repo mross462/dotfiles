@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/bashrc.pre.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.pre.bash"
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -141,3 +143,6 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # added by travis gem
 [ -f /Users/michael.ross/.travis/travis.sh ] && source /Users/michael.ross/.travis/travis.sh
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"

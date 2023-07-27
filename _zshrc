@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 #!/bin/zsh
 #History is important.
 HISTFILE=~/.zsh_history
@@ -24,3 +26,9 @@ zgen load zsh-users/zsh-history-substring-search
 zgen load zsh-users/zsh-autosuggestions
 zgen load zsh-users/zsh-completions
 zgen prezto prompt minimal
+
+# Load VN Functions for zsh
+source .zshrc_vn
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
