@@ -27,8 +27,18 @@ zgen load zsh-users/zsh-autosuggestions
 zgen load zsh-users/zsh-completions
 zgen prezto prompt minimal
 
-# Load VN Functions for zsh
-source .zshrc_vn
-
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+# Load VN Functions for zsh
+source $HOME/.zshrc_vn
+
+# Fucking ruby
+
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
+
+# added by travis gem
+[ ! -s /Users/mross/.travis/travis.sh ] || source /Users/mross/.travis/travis.sh

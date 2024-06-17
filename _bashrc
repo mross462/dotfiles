@@ -146,3 +146,6 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/bashrc.post.bash" ]] && builtin source "$HOME/.fig/shell/bashrc.post.bash"
+
+# added by travis gem
+[ ! -s /Users/mross/.travis/travis.sh ] || source /Users/mross/.travis/travis.sh
